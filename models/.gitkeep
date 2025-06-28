@@ -1,0 +1,11 @@
+# Models Directory
+
+This directory is for storing trained model files and checkpoints.
+
+## Structure
+- `yolov8/` - YOLOv8 model files
+- `yolov9/` - YOLOv9 model files  
+- `yolov10/` - YOLOv10 model files
+- `checkpoints/` - Training checkpoints
+
+Model files (.pt, .pth, .onnx, etc.) are gitignored by default.

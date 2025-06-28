@@ -1,0 +1,9 @@
+# Data Directory
+
+This directory is for storing datasets and data-related files.
+
+## Structure
+- Place your COCO, custom datasets, or other training data here
+- Use the `prepare_data.py` script to download and prepare datasets
+
+Files in this directory are gitignored by default to avoid committing large dataset files.

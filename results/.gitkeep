@@ -1,0 +1,11 @@
+# Results Directory
+
+This directory will contain training results, logs, and model outputs.
+
+## Structure
+- `logs/` - Training logs and metrics
+- `models/` - Trained model checkpoints
+- `plots/` - Visualization plots and charts
+- `experiments/` - Experiment-specific results
+
+Files in this directory are gitignored by default.

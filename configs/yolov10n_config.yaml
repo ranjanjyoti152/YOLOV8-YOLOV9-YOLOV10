@@ -1,0 +1,38 @@
+data:
+  dataset_path: ./data/coco128
+  train_split: 0.8
+  val_split: 0.1
+  test_split: 0.1
+  num_classes: 80
+  class_names: null
+  image_size: 640
+  augmentation: true
+
+model:
+  model_name: yolov10n
+  pretrained: true
+  num_classes: 80
+  input_size: 640
+  confidence_threshold: 0.25
+  iou_threshold: 0.7
+
+training:
+  epochs: 100
+  batch_size: 16
+  learning_rate: 0.01
+  optimizer: SGD
+  scheduler: cosine
+  weight_decay: 0.0005
+  momentum: 0.937
+  warmup_epochs: 3
+  patience: 50
+  save_period: 10
+  amp: true
+
+experiment:
+  project_name: yolo-comparison
+  experiment_name: yolov10n_experiment
+  use_wandb: true
+  use_tensorboard: true
+  save_predictions: true
+  save_metrics: true
