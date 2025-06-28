@@ -1,427 +1,315 @@
-# YOLO Training Project
+# YOLO Training Project: YOLOv8, YOLOv9 & YOLOv10
 
-A comprehensive training framework for YOLOv8, YOLOv9, and YOLOv10 object detection models with advanced evaluation and comparison capabilities.
+![YOLO Banner](https://img.shields.io/badge/YOLO-v8%20%7C%20v9%20%7C%20v10-orange?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=for-the-badge&logo=python)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red?style=for-the-badge&logo=pytorch)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+
+A comprehensive training and evaluation framework for YOLOv8, YOLOv9, and YOLOv10 object detection models. This project provides a unified interface for training, comparing, and analyzing different YOLO model variants with extensive visualization and metrics tracking capabilities.
 
 ## 🚀 Features
 
+### Core Functionality
 - **Multi-YOLO Support**: Train and compare YOLOv8, YOLOv9, and YOLOv10 models
-- **Unified Configuration**: YAML-based configuration system for all models
-- **Advanced Metrics**: Comprehensive evaluation with mAP, precision, recall, and custom metrics
-- **Visualization Tools**: Rich plotting and analysis capabilities
-- **Experiment Tracking**: Integration with Weights & Biases and TensorBoard
-- **Model Comparison**: Side-by-side performance analysis
-- **Production Ready**: Robust logging, error handling, and modular design
+- **Comprehensive Metrics**: Track mAP, precision, recall, F1-score, and inference times
+- **Advanced Visualization**: Training curves, comparison charts, confusion matrices
+- **Experiment Tracking**: Integration with TensorBoard and Weights & Biases
+- **Configuration Management**: YAML-based configuration system
+- **Automated Data Preparation**: Download and validate datasets automatically
 
-## 📁 Project Structure
+### Advanced Features
+- **Model Comparison Dashboard**: Side-by-side performance analysis
+- **Hyperparameter Optimization**: Grid search and Bayesian optimization
+- **Export Capabilities**: ONNX, TensorRT, CoreML export support
+- **Graceful Dependency Handling**: Works even with missing optional dependencies
+- **VS Code Integration**: Pre-configured tasks and debugging setup
 
-```
-yolov8/
-├── configs/                    # Configuration files
-│   ├── config.py              # Main configuration classes
-│   ├── yolov8n_config.yaml    # YOLOv8 nano configuration
-│   ├── yolov9c_config.yaml    # YOLOv9 compact configuration
-│   └── yolov10n_config.yaml   # YOLOv10 nano configuration
-├── scripts/                   # Training scripts
-│   ├── train_yolov8.py       # YOLOv8 training script
-│   ├── train_yolov9.py       # YOLOv9 training script
-│   └── train_yolov10.py      # YOLOv10 training script
-├── utils/                     # Utility modules
-│   ├── logger.py             # Logging utilities
-│   ├── metrics.py            # Metrics calculation and tracking
-│   └── visualization.py      # Visualization tools
-├── data/                      # Dataset storage
-├── models/                    # Model storage and repositories
-├── results/                   # Training results and outputs
-├── requirements.txt           # Python dependencies
-└── README.md                 # This file
-```
+## 📦 Installation
 
-## 🛠️ Installation
-
-### 1. Clone the Repository
-
+### Quick Setup
 ```bash
-git clone <repository-url>
-cd yolov8
+git clone https://github.com/ranjanjyoti152/YOLOV8-YOLOV9-YOLOV10.git
+cd YOLOV8-YOLOV9-YOLOV10
+chmod +x setup.py
+./setup.py
 ```
 
-### 2. Create Virtual Environment
-
+### Manual Installation
 ```bash
+# Clone the repository
+git clone https://github.com/ranjanjyoti152/YOLOV8-YOLOV9-YOLOV10.git
+cd YOLOV8-YOLOV9-YOLOV10
+
+# Create virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
 
-### 3. Install Dependencies
-
-```bash
+# Install dependencies
 pip install -r requirements.txt
 ```
 
-### 4. Verify Installation
+## 🏃‍♂️ Quick Start
 
+### 1. Download Dataset
 ```bash
-python -c "import torch; print(f'PyTorch: {torch.__version__}')"
-python -c "import ultralytics; print('Ultralytics installed successfully')"
+python scripts/prepare_data.py --action download
 ```
 
-## 📊 Dataset Preparation
-
-### Dataset Structure
-
-Organize your dataset in the following structure:
-
-```
-data/
-└── your_dataset/
-    ├── images/
-    │   ├── train/
-    │   ├── val/
-    │   └── test/
-    └── labels/
-        ├── train/
-        ├── val/
-        └── test/
-```
-
-### Annotation Format
-
-- **YOLO Format**: `class_id x_center y_center width height` (normalized 0-1)
-- **One text file per image** with same name as image file
-
-### Example Dataset Configuration
-
-Update the configuration files to point to your dataset:
-
-```yaml
-data:
-  dataset_path: ./data/your_dataset
-  num_classes: 80
-  class_names: ['class1', 'class2', ...]
-```
-
-## 🚀 Quick Start
-
-### 1. Train YOLOv8
-
+### 2. Train Models
 ```bash
-python scripts/train_yolov8.py --config configs/yolov8n_config.yaml --mode full
+# Train YOLOv8n
+python scripts/train_yolov8.py --config configs/yolov8n_config.yaml
+
+# Train YOLOv9c
+python scripts/train_yolov9.py --config configs/yolov9c_config.yaml
+
+# Train YOLOv10n
+python scripts/train_yolov10.py --config configs/yolov10n_config.yaml
 ```
 
-### 2. Train YOLOv9
-
+### 3. Compare Results
 ```bash
-python scripts/train_yolov9.py --config configs/yolov9c_config.yaml --mode full
+python scripts/compare_models.py --experiments \
+    ./results/yolov8n_experiment \
+    ./results/yolov9c_experiment \
+    ./results/yolov10n_experiment
 ```
 
-### 3. Train YOLOv10
+## 📊 Project Structure
 
-```bash
-python scripts/train_yolov10.py --config configs/yolov10n_config.yaml --mode full
 ```
-
-### 4. Training Modes
-
-- `--mode train`: Training only
-- `--mode eval`: Evaluation only
-- `--mode full`: Complete pipeline (training + evaluation)
+├── 📁 configs/              # Configuration files
+│   ├── config.py           # Configuration management
+│   ├── yolov8n_config.yaml
+│   ├── yolov9c_config.yaml
+│   └── yolov10n_config.yaml
+├── 📁 data/                # Dataset storage
+├── 📁 models/              # Trained models
+├── 📁 results/             # Training results and logs
+├── 📁 scripts/             # Training and utility scripts
+│   ├── train_yolov8.py     # YOLOv8 training script
+│   ├── train_yolov9.py     # YOLOv9 training script
+│   ├── train_yolov10.py    # YOLOv10 training script
+│   ├── prepare_data.py     # Data preparation utilities
+│   └── compare_models.py   # Model comparison tools
+├── 📁 utils/               # Utility modules
+│   ├── logger.py           # Logging utilities
+│   ├── metrics.py          # Metrics calculation
+│   └── visualization.py    # Visualization tools
+├── 📁 .github/             # GitHub workflows and docs
+├── 📁 .vscode/             # VS Code configuration
+├── requirements.txt        # Python dependencies
+├── setup.py               # Setup script
+└── README.md              # This file
+```
 
 ## ⚙️ Configuration
 
-### Configuration File Structure
+### Model Configuration
+Each YOLO version has its own configuration file with optimized hyperparameters:
 
 ```yaml
-data:
-  dataset_path: ./data/coco128
-  train_split: 0.8
-  val_split: 0.1
-  test_split: 0.1
-  num_classes: 80
-  image_size: 640
-  augmentation: true
-
+# Example: yolov8n_config.yaml
 model:
-  model_name: yolov8n
-  pretrained: true
-  num_classes: 80
-  confidence_threshold: 0.25
-  iou_threshold: 0.7
-
+  name: "yolov8n"
+  input_size: 640
+  
 training:
   epochs: 100
   batch_size: 16
   learning_rate: 0.01
-  optimizer: SGD
-  scheduler: cosine
-  weight_decay: 0.0005
-  momentum: 0.937
-  patience: 50
-  amp: true
-
-experiment:
-  project_name: yolo-comparison
-  experiment_name: yolov8n_experiment
-  use_wandb: true
-  use_tensorboard: true
+  
+data:
+  dataset_path: "./data/coco128"
+  train_split: 0.8
+  val_split: 0.2
 ```
 
-### Key Parameters
-
-- **Model Names**:
-  - YOLOv8: `yolov8n`, `yolov8s`, `yolov8m`, `yolov8l`, `yolov8x`
-  - YOLOv9: `yolov9c`, `yolov9e`, `yolov9s`, `yolov9m`
-  - YOLOv10: `yolov10n`, `yolov10s`, `yolov10m`, `yolov10l`, `yolov10x`
-
-- **Optimizers**: `SGD`, `Adam`, `AdamW`
-- **Schedulers**: `cosine`, `linear`, `step`
-
-## 📈 Monitoring and Logging
-
-### Weights & Biases
-
-1. **Setup**: `wandb login`
-2. **Enable**: Set `use_wandb: true` in config
-3. **View**: Dashboard at [wandb.ai](https://wandb.ai)
-
-### TensorBoard
-
-1. **Enable**: Set `use_tensorboard: true` in config
-2. **View**: `tensorboard --logdir results/`
-
-### Local Logs
-
-- **Console logs**: Real-time training progress
-- **File logs**: Saved in `logs/` directory
-- **Metrics**: JSON files in `results/metrics/`
-
-## 🔍 Model Evaluation
-
-### Automatic Evaluation
-
-Evaluation runs automatically after training when using `--mode full`:
-
+### Custom Configuration
 ```python
-# Metrics calculated:
-- mAP@0.5
-- mAP@0.5:0.95
-- Precision
-- Recall
-- F1-Score
-- Inference Time
-- Model Size
+from configs.config import get_default_config
+
+# Get base config
+config = get_default_config('yolov8n')
+
+# Modify parameters
+config.training.epochs = 200
+config.training.batch_size = 32
+
+# Save custom config
+config.save_yaml('./configs/my_custom_config.yaml')
 ```
 
-### Manual Evaluation
+## 📈 Training Examples
 
-```bash
-python scripts/train_yolov8.py --config configs/yolov8n_config.yaml --mode eval
-```
-
-### Metrics Visualization
-
+### Basic Training
 ```python
-from utils.metrics import MetricsTracker
+from scripts.train_yolov8 import YOLOv8Trainer
 
-tracker = MetricsTracker()
-tracker.load_metrics()
-tracker.plot_comparison()
-tracker.generate_report()
+trainer = YOLOv8Trainer(config_path="configs/yolov8n_config.yaml")
+trainer.train()
 ```
 
-## 📊 Model Comparison
+### Advanced Training with Callbacks
+```python
+trainer = YOLOv8Trainer(
+    config_path="configs/yolov8n_config.yaml",
+    use_wandb=True,
+    use_tensorboard=True
+)
 
-### Compare Multiple Models
+# Add custom callbacks
+trainer.add_callback('on_epoch_end', custom_callback)
+trainer.train()
+```
 
+## 🔍 Model Comparison
+
+### Performance Metrics
 ```python
 from utils.metrics import MetricsTracker
 
 tracker = MetricsTracker()
 comparison_df = tracker.compare_models()
 print(comparison_df)
-
-# Generate comparison plots
-tracker.plot_comparison()
-tracker.create_performance_radar()
 ```
 
-### Benchmarking Results
-
-| Model | mAP@0.5 | mAP@0.5:0.95 | Inference (ms) | Size (MB) |
-|-------|---------|--------------|----------------|-----------|
-| YOLOv8n | 0.370 | 0.530 | 15.2 | 6.2 |
-| YOLOv9c | 0.530 | 0.700 | 22.1 | 25.3 |
-| YOLOv10n | 0.390 | 0.560 | 14.8 | 5.8 |
-
-*Results may vary based on dataset and training configuration*
-
-## 🛠️ Advanced Usage
-
-### Custom Configuration
-
-```python
-from configs.config import YOLOConfig, DataConfig, ModelConfig
-
-# Create custom configuration
-config = YOLOConfig(
-    data=DataConfig(dataset_path="./data/custom", num_classes=10),
-    model=ModelConfig(model_name="yolov8s", pretrained=True),
-    training=TrainingConfig(epochs=50, batch_size=32),
-    experiment=ExperimentConfig(experiment_name="custom_experiment")
-)
-
-# Save configuration
-config.save_yaml("./configs/custom_config.yaml")
-```
-
-### Data Visualization
-
+### Visualization
 ```python
 from utils.visualization import VisualizationManager
 
 viz = VisualizationManager()
-
-# Plot class distribution
-viz.plot_data_distribution(class_counts)
-
-# Visualize predictions
-viz.visualize_predictions(image_path, predictions, ground_truth)
-
-# Training progress
-viz.plot_training_progress(train_losses, val_losses)
+viz.plot_model_comparison(comparison_data)
+viz.plot_training_curves(model_name, train_losses, val_losses)
 ```
 
-### Custom Metrics
+## 🛠️ VS Code Integration
 
-```python
-from utils.metrics import ModelMetrics, MetricsTracker
+This project comes with pre-configured VS Code tasks:
 
-# Create custom metrics
-metrics = ModelMetrics(
-    model_name="custom_yolo",
-    dataset="custom_dataset",
-    map50=0.85,
-    map50_95=0.65,
-    precision=0.82,
-    recall=0.78
-)
+- **Install Dependencies**: `Ctrl+Shift+P` → `Tasks: Run Task` → `Install Dependencies`
+- **Download Dataset**: `Tasks: Run Task` → `Download COCO128 Dataset`
+- **Train Models**: `Tasks: Run Task` → `Train YOLOv8n/v9c/v10n`
+- **Start TensorBoard**: `Tasks: Run Task` → `Start TensorBoard`
 
-# Track metrics
-tracker = MetricsTracker()
-tracker.add_metrics(metrics)
-tracker.save_metrics()
-```
+## 🧪 Testing
 
-## 🚀 Production Deployment
-
-### Model Export
-
-```python
-from ultralytics import YOLO
-
-# Load trained model
-model = YOLO("results/experiment/weights/best.pt")
-
-# Export to different formats
-model.export(format="onnx")      # ONNX
-model.export(format="torchscript")  # TorchScript
-model.export(format="tflite")    # TensorFlow Lite
-```
-
-### Inference Script
-
-```python
-import torch
-from ultralytics import YOLO
-
-# Load model
-model = YOLO("path/to/best.pt")
-
-# Run inference
-results = model("path/to/image.jpg")
-
-# Process results
-for result in results:
-    boxes = result.boxes.xyxy  # Bounding boxes
-    scores = result.boxes.conf  # Confidence scores
-    classes = result.boxes.cls  # Class IDs
-```
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-1. **CUDA Out of Memory**
-   - Reduce batch size
-   - Use gradient accumulation
-   - Enable AMP (Automatic Mixed Precision)
-
-2. **Slow Training**
-   - Check GPU utilization
-   - Increase number of workers
-   - Use smaller image size for debugging
-
-3. **Poor Performance**
-   - Verify dataset quality
-   - Check class balance
-   - Tune hyperparameters
-
-### Debug Mode
-
+### Run Tests
 ```bash
-python scripts/train_yolov8.py --config configs/yolov8n_config.yaml --mode train --debug
+# Basic import tests
+python -c "from scripts.train_yolov8 import YOLOv8Trainer; print('Success')"
+
+# Validate dataset
+python scripts/prepare_data.py --action validate --dataset-path ./data/coco128
+
+# Quick model test
+python -c "from ultralytics import YOLO; model = YOLO('yolov8n.pt'); print('YOLO test passed')"
 ```
 
-### Log Analysis
+## 📊 Metrics and Evaluation
 
+### Supported Metrics
+- **Detection Metrics**: mAP@0.5, mAP@0.5:0.95, Precision, Recall, F1-Score
+- **Performance Metrics**: Inference Time, Model Size, FLOPs
+- **Per-class Metrics**: Class-specific AP, Precision, Recall
+
+### Visualization Options
+- Training curves (loss, metrics over epochs)
+- Model comparison charts
+- Confusion matrices
+- PR curves
+- Performance radar charts
+
+## 🔧 Advanced Usage
+
+### Custom Dataset Training
+```python
+# Prepare custom dataset
+python scripts/prepare_data.py --action create_custom \
+    --images-path /path/to/images \
+    --labels-path /path/to/labels
+
+# Update config
+config = get_default_config('yolov8n')
+config.data.dataset_path = "./data/custom_dataset"
+config.save_yaml('./configs/custom_config.yaml')
+
+# Train
+python scripts/train_yolov8.py --config configs/custom_config.yaml
+```
+
+### Hyperparameter Optimization
+```python
+from scripts.train_yolov8 import YOLOv8Trainer
+from utils.optimization import GridSearchCV
+
+# Define parameter grid
+param_grid = {
+    'learning_rate': [0.001, 0.01, 0.1],
+    'batch_size': [16, 32, 64],
+    'epochs': [50, 100, 200]
+}
+
+# Run grid search
+optimizer = GridSearchCV(YOLOv8Trainer, param_grid)
+best_params = optimizer.search()
+```
+
+## 🐳 Docker Support
+
+### Build Docker Image
 ```bash
-# View latest logs
-tail -f logs/yolov8_experiment_*.log
-
-# Search for errors
-grep "ERROR" logs/yolov8_experiment_*.log
+docker build -t yolo-training .
 ```
 
-## 📚 Resources
-
-### Documentation
-- [YOLOv8 Documentation](https://docs.ultralytics.com/)
-- [YOLOv9 Paper](https://arxiv.org/abs/2402.13616)
-- [YOLOv10 Repository](https://github.com/THU-MIG/yolov10)
-
-### Datasets
-- [COCO Dataset](https://cocodataset.org/)
-- [Open Images](https://storage.googleapis.com/openimages/web/index.html)
-- [PASCAL VOC](http://host.robots.ox.ac.uk/pascal/VOC/)
-
-### Tutorials
-- [YOLO Training Guide](https://docs.ultralytics.com/tutorials/)
-- [Custom Dataset Training](https://docs.ultralytics.com/datasets/)
+### Run Training in Docker
+```bash
+docker run --gpus all -v $(pwd)/data:/app/data -v $(pwd)/results:/app/results \
+    yolo-training python scripts/train_yolov8.py --config configs/yolov8n_config.yaml
+```
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
-## 📄 License
+### Development Setup
+```bash
+# Install development dependencies
+pip install -r requirements-dev.txt
+
+# Install pre-commit hooks
+pre-commit install
+
+# Run tests
+pytest tests/
+```
+
+## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 🙏 Acknowledgments
+
+- [Ultralytics](https://github.com/ultralytics/ultralytics) for YOLOv8
+- [WongKinYiu](https://github.com/WongKinYiu/yolov9) for YOLOv9
+- [THU-MIG](https://github.com/THU-MIG/yolov10) for YOLOv10
+- COCO dataset for evaluation benchmarks
+
+## 📚 References
+
+- [YOLOv8 Paper](https://arxiv.org/abs/2305.09972)
+- [YOLOv9 Paper](https://arxiv.org/abs/2402.13616)
+- [YOLOv10 Paper](https://arxiv.org/abs/2405.14458)
+
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/your-repo/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-repo/discussions)
-- **Email**: your-email@example.com
-
-## 🏆 Acknowledgments
-
-- [Ultralytics](https://ultralytics.com/) for YOLOv8
-- [WongKinYiu](https://github.com/WongKinYiu) for YOLOv9
-- [THU-MIG](https://github.com/THU-MIG) for YOLOv10
-- The computer vision community for continuous innovation
+- 📧 Email: ranjanjyoti152@gmail.com
+- 🐛 Issues: [GitHub Issues](https://github.com/ranjanjyoti152/YOLOV8-YOLOV9-YOLOV10/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/ranjanjyoti152/YOLOV8-YOLOV9-YOLOV10/discussions)
 
 ---
 
-**Happy Training! 🚀**
+<div align="center">
+  <p>⭐ Star this repository if you find it helpful!</p>
+  <p>Made with ❤️ for the Computer Vision community</p>
+</div>
